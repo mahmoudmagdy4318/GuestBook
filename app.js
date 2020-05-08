@@ -5,6 +5,7 @@ const app = express();
 const port = process.env.PORT || 8000;
 const { json, urlencoded } = require("body-parser");
 const authRouter = require("./routes/AuthRouter");
+const messageRouter = require("./routes/MessageRouter");
 
 const databaseUrl = process.env.DATABASEURL;
 
@@ -24,6 +25,9 @@ app.use(urlencoded({ extended: true }));
 
 //routing for user routes
 app.use("/user", authRouter);
+
+//routing for message routes
+app.use("/messages", messageRouter);
 
 //errors handling
 app.use((err, req, res, next) => {
