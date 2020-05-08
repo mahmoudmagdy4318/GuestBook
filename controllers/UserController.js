@@ -1,6 +1,9 @@
 const UserModel = require("../models/UsersModel");
 module.exports = function userController() {
-  const register = async (req, res, next) => {
+  const register = async (errors, req, res, next) => {
+    if (!errors.isEmpty()) {
+      return res.status(422).json({ errors: errors.array() });
+    }
     const user = new UserModel(req.body);
     try {
       const newUser = await user.save();
