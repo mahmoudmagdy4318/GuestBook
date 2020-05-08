@@ -1,14 +1,11 @@
 const express = require("express");
-const app = express();
-const UserModel = require("../models/UsersModel");
-const mongoose = require("mongoose");
-const userController = require("../controllers/UserController");
-const Usercontrol = userController();
+const authController = require("../controllers/AuthController");
+const Authcontrol = authController();
 const { check, validationResult } = require("express-validator");
 
-userRouter = express.Router();
+authRouter = express.Router();
 
-userRouter.post(
+authRouter.post(
   "/register",
   [
     // email must be a valid email
@@ -18,10 +15,14 @@ userRouter.post(
     // username must be at least 5 chars long
     check("username").isLength({ min: 5 }),
   ],
-  async (req, res, next) => {
+  (req, res, next) => {
     const errors = validationResult(req);
-    Usercontrol.register(errors, req, res, next);
+    Authcontrol.register(errors, req, res, next);
   }
 );
 
-module.exports = userRouter;
+authRouter.post("/login", (req, res, next) => {
+  Authcontrol.login(req, res, next);
+});
+
+module.exports = authRouter;

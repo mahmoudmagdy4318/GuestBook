@@ -4,7 +4,7 @@ require("dotenv").config();
 const app = express();
 const port = process.env.PORT || 8000;
 const { json, urlencoded } = require("body-parser");
-const userRouter = require("./routes/UserRouter");
+const authRouter = require("./routes/AuthRouter");
 
 const databaseUrl = process.env.DATABASEURL;
 
@@ -23,7 +23,7 @@ app.use(json());
 app.use(urlencoded({ extended: true }));
 
 //routing for user routes
-app.use("/user", userRouter);
+app.use("/user", authRouter);
 
 //errors handling
 app.use((err, req, res, next) => {
