@@ -27,7 +27,8 @@ module.exports = function authController() {
     if (user) {
       const cmp = await user.comparePassword(password);
       if (cmp) {
-        res.json(user);
+        const token = await user.generateToken();
+        res.json({ user, token });
       } else {
         res.status(403).json({ error: "invalid username or password" });
       }

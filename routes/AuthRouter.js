@@ -2,8 +2,13 @@ const express = require("express");
 const authController = require("../controllers/AuthController");
 const Authcontrol = authController();
 const { check, validationResult } = require("express-validator");
+const alreadyLoginnedMiddleware = require("../middlewares/alreadyLoginnedMiddleware");
 
 authRouter = express.Router();
+
+authRouter.use((req, res, next) => {
+  alreadyLoginnedMiddleware(req, res, next);
+});
 
 authRouter.post(
   "/register",

@@ -3,8 +3,13 @@ const mongoose = require("mongoose");
 const messageController = require("../controllers/MessageController");
 const messageControl = messageController();
 const MessageModel = require("../models/MessageModel");
+const authorizationMiddleware = require("../middlewares/authorizationMiddleware");
 
 messageRouter = express.Router();
+
+messageRouter.use((req, res, next) => {
+  authorizationMiddleware(req, res, next);
+});
 
 messageRouter
   .route("/")
