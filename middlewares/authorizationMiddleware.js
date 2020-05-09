@@ -8,9 +8,13 @@ const authorizeToken = async function (req, res, next) {
     });
   else {
     const token = req.headers.token;
-    const currentUser = await UserModel.getCurrentUserFromToken(token);
-    req.currentUser = currentUser;
-    next();
+    try {
+      const currentUser = await UserModel.getCurrentUserFromToken(token);
+      req.currentUser = currentUser;
+      next();
+    } catch {
+      res.status(401).json({ error: "Your session has been expired!" });
+    }
   }
 };
 

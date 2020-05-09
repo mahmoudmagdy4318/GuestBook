@@ -14,6 +14,7 @@ axiosInstance.interceptors.response.use(
       alert(
         "you are not authorized to do that action please identify your identity!"
       );
+      localStorage.removeItem("jwtToken");
       window.location.href = "/login";
 
       return;

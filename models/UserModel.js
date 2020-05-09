@@ -47,9 +47,10 @@ UserModel.methods.generateToken = function () {
 
 UserModel.statics.getCurrentUserFromToken = async function (token) {
   const payload = await verify(token, process.env.SECRET_KEY);
-  const currentUser = await this.find({ username: payload.username });
+  const currentUser = await this.find({ username: eval(payload.username) });
   if (!currentUser) throw new Error("user not found!");
-  return currentUser;
+  currentuser = currentUser[0];
+  return currentuser;
 };
 
 module.exports = mongoose.model("User", UserModel);

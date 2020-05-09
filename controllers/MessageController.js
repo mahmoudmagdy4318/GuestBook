@@ -14,9 +14,8 @@ const messageController = function () {
 
   //function to add a message
   const addMessage = async (req, res, next) => {
-    //get the authenticated user
     const newMessage = new MessageModel({
-      user: mongoose.Types.ObjectId(req.body.user),
+      user: req.currentUser,
       body: req.body.message,
     });
     try {
@@ -32,10 +31,11 @@ const messageController = function () {
   const editMessage = async (req, res, next) => {
     const { userMessage } = req;
     try {
-      const updatedMessage = await MessageModel.updateOne(userMessage, {
-        $set: req.body,
+      const updatedMessage = await MessageModel.update(userMessage, {
+        $set: { body: req.body.editedMessage },
       });
-      res.json(updatedMessage);
+      userMessage.body = req.body.editedMessage;
+      res.json(userMessage);
     } catch (err) {
       err.statusCode = 400;
       next(err);

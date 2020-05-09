@@ -2,7 +2,7 @@ const UserModel = require("../models/UserModel");
 
 const authorizeUser = async function (req, res, next) {
   const { currentUser, userMessage } = req;
-  if ((currentUser._id = userMessage.user._id)) {
+  if (currentUser.id == userMessage.user.id) {
     next();
   } else {
     res.status(401).json({

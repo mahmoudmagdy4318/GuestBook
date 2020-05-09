@@ -18,6 +18,7 @@ function Login(props) {
         password,
       });
       localStorage.setItem("jwtToken", res.token);
+      localStorage.setItem("username", username);
       history.push("/");
     } catch (error) {
       setMessage(_.get(error, "response.data.error"));
