@@ -3,12 +3,13 @@ const mongoose = require("mongoose");
 const messageController = require("../controllers/MessageController");
 const messageControl = messageController();
 const MessageModel = require("../models/MessageModel");
-const authorizationMiddleware = require("../middlewares/authorizationMiddleware");
+const TokenAuthorizationMiddleware = require("../middlewares/authorizationMiddleware");
+const UserAuthorizationMiddleware = require("../middlewares/authorizationForAction");
 
 messageRouter = express.Router();
 
 messageRouter.use((req, res, next) => {
-  authorizationMiddleware(req, res, next);
+  TokenAuthorizationMiddleware(req, res, next);
 });
 
 messageRouter
@@ -29,6 +30,10 @@ messageRouter.all("/:id", async (req, res, next) => {
   ).populate("user");
   req.userMessage = message;
   next();
+});
+
+messageRouter.use((req, res, next) => {
+  UserAuthorizationMiddleware(req, res, next);
 });
 
 messageRouter

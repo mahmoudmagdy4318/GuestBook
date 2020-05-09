@@ -18,12 +18,14 @@ function Home() {
       });
   }, []);
 
-  const onDeleteMsg = async (id, index) => {
+  const onDeleteMsg = async (id) => {
     try {
-      await axiosInstance.delete(`http://localhost:8080/messages/${id}`);
-      let newMessages = messages;
-      newMessages.splice(index, 1);
-      setMessages(setMessages);
+      await axiosInstance.delete(`http://localhost:8080/messages/${id}`, {
+        headers: { token: localStorage.getItem("jwtToken") },
+      });
+      //   let newMessages = messages;
+      //   newMessages.splice(index, 1);
+      setMessages(messages.filter((m) => m._id != id));
     } catch (err) {
       console.log(err);
     }
@@ -62,7 +64,7 @@ function Home() {
                   <td>
                     <button
                       onClick={() => {
-                        onDeleteMsg(msg._id, index);
+                        onDeleteMsg(msg._id);
                       }}
                       className="btn btn-warning mt-2"
                     >

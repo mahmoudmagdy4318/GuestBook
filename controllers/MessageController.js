@@ -44,16 +44,14 @@ const messageController = function () {
 
   //function to delete a message
   const deleteMessage = async (req, res, next) => {
-    console.log(req);
-
-    // const { userMessage } = req;
-    // try {
-    //   userMessage.remove();
-    //   res.json({ res: "deleted successfully" });
-    // } catch (err) {
-    //   err.statusCode = 400;
-    //   next(err);
-    // }
+    const { userMessage } = req;
+    try {
+      userMessage.remove();
+      res.json({ res: "deleted successfully" });
+    } catch (err) {
+      err.statusCode = 400;
+      next(err);
+    }
   };
 
   return { getAllMessages, addMessage, editMessage, deleteMessage };
