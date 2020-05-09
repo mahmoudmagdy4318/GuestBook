@@ -6,7 +6,10 @@
   "scripts": {
     "start": "nodemon app.js",
     "debug": "nodemon --inspect app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "nodemon --inspect .",
+    "client": "npm start --prefix client-side",
+    "dev": "concurrently \"npm run server \" \"npm run client \" "
   },
   "repository": {
     "type": "git",
@@ -28,6 +31,7 @@
     "mongoose": "^5.9.12"
   },
   "devDependencies": {
+    "concurrently": "^5.2.0",
     "nodemon": "^2.0.3"
   }
 }
