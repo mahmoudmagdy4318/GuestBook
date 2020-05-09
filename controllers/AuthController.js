@@ -9,15 +9,15 @@ module.exports = function authController() {
   //registration function
   const register = async (errors, req, res, next) => {
     if (!errors.isEmpty()) {
-      return res.status(422).json({ errors: errors.array() });
+      const { msg, param } = errors.array()[0];
+      return res.status(422).json({ error: `${msg} for field ${param}` });
     }
     const user = new UserModel(req.body);
     try {
       const newUser = await user.save();
       res.json({ newUser });
     } catch (err) {
-      err.statusCode = 403;
-      next(err);
+      res.status(422).json({ error: "This username already exits" });
     }
   };
   //login function

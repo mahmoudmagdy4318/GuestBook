@@ -7,7 +7,7 @@ const messageController = function () {
       const messages = await MessageModel.find({}).populate("user");
       res.json(messages);
     } catch (error) {
-      error.statusCode = 403;
+      error.statusCode = 400;
       next(error);
     }
   };
@@ -23,7 +23,7 @@ const messageController = function () {
       const message = await newMessage.save();
       res.json(message);
     } catch (err) {
-      err.statusCode = 403;
+      err.statusCode = 400;
       next(err);
     }
   };
@@ -37,21 +37,23 @@ const messageController = function () {
       });
       res.json(updatedMessage);
     } catch (err) {
-      err.statusCode = 403;
+      err.statusCode = 400;
       next(err);
     }
   };
 
   //function to delete a message
   const deleteMessage = async (req, res, next) => {
-    const { userMessage } = req;
-    try {
-      userMessage.remove();
-      res.json({ res: "deleted successfully" });
-    } catch (err) {
-      err.statusCode = 403;
-      next(err);
-    }
+    console.log(req);
+
+    // const { userMessage } = req;
+    // try {
+    //   userMessage.remove();
+    //   res.json({ res: "deleted successfully" });
+    // } catch (err) {
+    //   err.statusCode = 400;
+    //   next(err);
+    // }
   };
 
   return { getAllMessages, addMessage, editMessage, deleteMessage };

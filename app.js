@@ -2,12 +2,16 @@ const express = require("express");
 const mongoose = require("mongoose");
 require("dotenv").config();
 const app = express();
-const port = process.env.PORT || 8000;
+const cors = require("cors");
 const { json, urlencoded } = require("body-parser");
 const authRouter = require("./routes/AuthRouter");
 const messageRouter = require("./routes/MessageRouter");
 
+//getting port and databaseUrl from env
+const port = process.env.PORT;
 const databaseUrl = process.env.DATABASEURL;
+
+app.use(cors());
 
 //database connection
 const db = mongoose

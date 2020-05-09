@@ -9,7 +9,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "server": "nodemon --inspect .",
     "client": "npm start --prefix client-side",
-    "dev": "concurrently \"npm run server \" \"npm run client \" "
+    "dev": "concurrently \"npm run server \" \"npm run client \" ",
+    "debugger": "concurrently \"npm run debug \" \"npm run client \" "
   },
   "repository": {
     "type": "git",
@@ -24,6 +25,7 @@
   "dependencies": {
     "bcrypt": "^4.0.1",
     "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-validator": "^6.4.1",

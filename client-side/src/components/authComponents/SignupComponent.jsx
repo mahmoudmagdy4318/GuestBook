@@ -1,29 +1,33 @@
-import React, { useState } from "react";
+import React, { Fragment, useState } from "react";
 import axiosInstance from "../../API/axiosInstance";
+import { Link } from "react-router-dom";
 import _ from "lodash";
-import { Link, useHistory } from "react-router-dom";
 
-function Login(props) {
+function Signup(props) {
   const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
 
-  const history = useHistory();
-
-  const submitLogin = async (e) => {
+  const submitSignup = async (e) => {
     e.preventDefault();
     try {
-      const res = await axiosInstance.post("http://localhost:8080/user/login", {
-        username,
-        password,
-      });
-      localStorage.setItem("jwtToken", res.token);
-      history.push("/");
+      const res = await axiosInstance.post(
+        "http://localhost:8080/user/register",
+        {
+          username,
+          email,
+          password,
+        }
+      );
+      console.log(res);
     } catch (error) {
+      debugger;
+      console.log("err", error);
+
       setMessage(_.get(error, "response.data.error"));
     }
   };
-
   return (
     <div className="container mt-5 ">
       <div className="card text-center">
@@ -31,13 +35,25 @@ function Login(props) {
           Welcome To Guest Book
         </div>
         <div className="card-body container col-6">
-          <h5 className="card-title">Login to continue</h5>
+          <h5 className="card-title">create new account</h5>
           {message && (
             <div className="alert alert-danger" role="alert">
               <strong>{message}</strong>
             </div>
           )}
-          <form onSubmit={submitLogin}>
+          <form onSubmit={submitSignup}>
+            <div className="form-group">
+              <label htmlFor="InputEmail">Email</label>
+              <input
+                type="email"
+                required
+                className="form-control"
+                id="InputEmail"
+                aria-describedby="emailHelp"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </div>
             <div className="form-group">
               <label htmlFor="InputUsername">Username</label>
               <input
@@ -62,17 +78,18 @@ function Login(props) {
               />
             </div>
 
-            <button type="submit" className="btn btn-primary">
+            <button type="submit" className="btn btn-secondary">
               Submit
             </button>
           </form>
         </div>
         <div className="card-footer text-muted text-light">
           <Link
-            className="btn btn-lg btn-secondary btn-block  font-weight-bold mb-2"
-            to="/register"
+            className="btn btn-lg btn-primary btn-block font-weight-bold mb-2"
+            type="submit"
+            to="/login"
           >
-            Don't have an account? Create one now!
+            Already have an account? Sign in now!
           </Link>
         </div>
       </div>
@@ -80,4 +97,4 @@ function Login(props) {
   );
 }
 
-export default Login;
+export default Signup;
