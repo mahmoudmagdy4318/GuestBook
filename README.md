@@ -65,5 +65,7 @@ It's the component to list all the replies for a specific messages and is render
 - #### AddReplyComponent
 Component To add a new Reply to a specific message using the axios instance and auto update in the state and it's rendered in the replies component.
 
-![](client-side/public/Screenshot from 2020-05-10 07-45-16.png)
-![](client-side/public/Screenshot from 2020-05-10 07-42-50.png)
+## screenshot from the homepage
+![](client-side/public/screenshot1.png)
+## screenshot while editing message
+![](client-side/public/screenshot2.png)
