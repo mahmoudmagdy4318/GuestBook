@@ -6,6 +6,7 @@ const cors = require("cors");
 const { json, urlencoded } = require("body-parser");
 const authRouter = require("./routes/AuthRouter");
 const messageRouter = require("./routes/MessageRouter");
+const replyRouter = require("./routes/RepliesRouter");
 
 //getting port and databaseUrl from env
 const port = process.env.PORT;
@@ -32,6 +33,9 @@ app.use("/user", authRouter);
 
 //routing for message routes
 app.use("/messages", messageRouter);
+
+//routing for reply routes
+app.use("/replies", replyRouter);
 
 //errors handling
 app.use((err, req, res, next) => {

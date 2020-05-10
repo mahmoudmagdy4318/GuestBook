@@ -2,21 +2,15 @@ import React, { useState } from "react";
 import axiosInstance from "../../API/axiosInstance";
 
 function AddMessage(props) {
-  const { messages, setMessages } = props;
+  const { messages, setMessages, tokenHeader } = props;
 
   const [newMessage, setNewMessage] = useState("");
-  let tokenHeaders;
 
   const onSubmitAdding = (e) => {
-    if (localStorage.getItem("jwtToken")) {
-      tokenHeaders = { headers: { token: localStorage.getItem("jwtToken") } };
-    } else {
-      tokenHeaders = null;
-    }
     e.preventDefault();
     console.log(props);
     axiosInstance
-      .post("messages", { message: newMessage }, tokenHeaders)
+      .post("messages", { message: newMessage }, tokenHeader)
       .then((res) => {
         setMessages([...messages, res]);
         setNewMessage("");
@@ -39,7 +33,7 @@ function AddMessage(props) {
           ></textarea>
         </div>
         <button type="submit" className="btn btn-primary">
-          Add
+          Leave Your Message
         </button>
       </form>
     </div>

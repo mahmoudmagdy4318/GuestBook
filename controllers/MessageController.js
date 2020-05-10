@@ -4,7 +4,12 @@ const messageController = function () {
   //function to get all messages
   const getAllMessages = async (req, res, next) => {
     try {
-      const messages = await MessageModel.find({}).populate("user");
+      const messages = await MessageModel.find({})
+        .populate("user")
+        .populate({
+          path: "replies",
+          populate: { path: "user" },
+        });
       res.json(messages);
     } catch (error) {
       error.statusCode = 400;
